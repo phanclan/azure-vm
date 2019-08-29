@@ -1,5 +1,5 @@
 terraform {
-  required_version = ">= 0.11.1"
+  required_version = ">= 0.12.1"
 }
 
 variable "location" {
@@ -27,8 +27,6 @@ module "windowsserver" {
   admin_password      = var.admin_password
   public_ip_dns       = ["${var.windows_dns_prefix}"]
   vnet_subnet_id      = module.network.vnet_subnets[0]
-  # Bug in module 1.3.0. ssh_key points to local file. does not work in TFE
-  # ssh_key             = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCjOXiqjoBMlfCBvmG6BcUGPv1q+YqNYLHlm6X18Frue+Yf2zG/56pMWtSoPbHKB+Nul0VNpANuOyt3qsEU+HtZz9MMTBiWL6kGH6S0saLMp7EpcZaib/Qxfkl1By6JnOwr6w7eW+XE4TXHRdBKaRWW4J52KdhlPXAeMFeSDL3qnZWaP7tIyKTQzdDXu0rSJIBpcYCVCQ5BkshWNvoVpDH0dH9r4ayLrzgnNzQHyqVFASU3DxqIAqrC3JflAz1aUWiwXhDJeZU3w6eDWvYxOAm+Z2vP5oiX/pqbYMlCUlPrsU5+6828kDQ5uQaZiCnSi2Bj3BDqpJngiVvyicJgvhW9 pephan@Mac-mini.local"
 }
 
 module "network" {
@@ -40,5 +38,5 @@ module "network" {
 }
 
 output "windows_vm_public_name"{
-  value = "${module.windowsserver.public_ip_dns_name}"
+  value = module.windowsserver.public_ip_dns_name
 }
