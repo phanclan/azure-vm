@@ -9,6 +9,7 @@ variable "location" {
 
 variable "windows_dns_prefix" {
   description = "DNS prefix to add to to public IP address for Windows VM"
+  default     = "pphan-win"
 }
 
 variable "admin_password" {
