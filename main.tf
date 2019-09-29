@@ -17,17 +17,26 @@ variable "admin_password" {
   default = "pTFE1234!"
 }
 
-module "windowsserver" {
+# module "windowsserver" {
+#   source              = "Azure/compute/azurerm"
+#   resource_group_name = "${var.windows_dns_prefix}-rc"
+#   location            = var.location
+#   vm_os_simple        = "WindowsServer"
+#   is_windows_image    = "true"
+#   vm_hostname         = "phan-pwc-ptfe"
+#   admin_password      = var.admin_password
+#   public_ip_dns       = ["${var.windows_dns_prefix}"]
+#   vnet_subnet_id      = module.network.vnet_subnets[0]
+# }
+
+module "linuxservers" {
   source              = "Azure/compute/azurerm"
-  # version             = "1.3.0"
-  location            = var.location
   resource_group_name = "${var.windows_dns_prefix}-rc"
-  vm_os_simple        = "WindowsServer"
-  is_windows_image    = "true"
-  vm_hostname         = "pwc-ptfe"
-  admin_password      = var.admin_password
-  public_ip_dns       = ["${var.windows_dns_prefix}"]
-  vnet_subnet_id      = module.network.vnet_subnets[0]
+  location            = var.location
+  vm_hostname         = "phan-linux-ptfe"
+  vm_os_simple        = "UbuntuServer"
+  public_ip_dns       = ["phan-linsimplevmips"] // change to a unique name per datacenter region
+  vnet_subnet_id      = "${module.network.vnet_subnets[0]}"
 }
 
 module "network" {
